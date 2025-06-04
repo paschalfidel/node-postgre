@@ -1,34 +1,19 @@
+# PostgreSQL CRUD App with Node.js and Express
 
-# PostgreSQL Mini Project
+A simple CRUD (Create, Read, Update, Delete) application using Node.js, Express, and PostgreSQL.
 
-This is a simple CRUD (Create, Read, Update, Delete) API built with **Node.js**, **Express**, and **PostgreSQL** to manage user records.
+## 🔧 Technologies Used
 
-## 🚀 Features
-
-- Add new users
-- Fetch all users
-- Fetch a user by ID
-- Update user details
-- Delete a user
-
-## 🛠️ Technologies Used
-
-- Node.js (ESM)
+- Node.js
 - Express.js
-- PostgreSQL
-- dotenv
+- PostgreSQL (pg library)
+- dotenv (for environment variables)
+- Joi (for input validation)
+- ESM module (`"type": "module"`)
 
-## 📁 Project Structure
+---
 
-```
-.
-├── main.js           # Entry point for the application
-├── .env              # Environment variables (excluded from Git)
-├── .gitignore
-├── package.json
-```
-
-## 📦 Setup Instructions
+## 🚀 Getting Started
 
 ### 1. Clone the Repository
 
@@ -43,107 +28,184 @@ cd node-postgre
 npm install
 ```
 
-### 3. Create a `.env` File
+### 3. Create a `.env` file
 
-Add your PostgreSQL credentials in a `.env` file:
+Add your PostgreSQL database credentials:
 
 ```env
-DB_PASSWORD=your_postgres_password
+DB_PASSWORD=your_password
 PORT=3000
 ```
 
-> **Note:** Make sure `.env` is listed in your `.gitignore`.
+### 4. Run the Application
 
-### 4. Create `.gitignore` File (if not already there)
-
-```bash
-# .gitignore
-node_modules/
-.env
-```
-
-### 5. Set Up PostgreSQL Database
-
-Ensure PostgreSQL is running and create the database and table manually using a GUI like pgAdmin:
-
-```sql
-CREATE DATABASE demodb;
-
-\c demodb
-
-CREATE TABLE users (
-  id SERIAL PRIMARY KEY,
-  name VARCHAR(100),
-  email VARCHAR(100),
-  age INT
-);
-```
-
-### 6. Run the Server
-
-Start the app in development mode:
-
+#### Development Mode (with nodemon)
 ```bash
 npm run dev
 ```
 
-Or in production:
-
+#### Production Mode
 ```bash
 npm start
 ```
 
-Your API should now be live at: `http://localhost:3000`
+Server will run on: `http://localhost:3000`
 
 ---
 
-## 📬 API Endpoints
+## 🧪 API Endpoints
 
-### POST `/users`
-Create a new user.
+### Create User
 
-**Body Example:**
+**POST** `/api/users`
 
 ```json
 {
-  "name": "John Doe",
-  "email": "john@example.com",
-  "age": 28
+  "name": "Fidel",
+  "email": "fidel@example.com",
+  "age": 40
 }
+```
+``` ✅ Success Response
+{
+  "message": "User created successfully"
+}
+```
+```❌Error Response
+{
+  "message": "\"email\" must be a valid email"
+}
+```
+📸 **Postman Screenshot for Create User**
+![Create User](./assets/Create-User.JPG)
+
+---
+
+### Get All Users
+
+**GET** `/api/users`
+``` ✅ Success Response 
+{
+  "message": "Users fetched successfully",
+  "users": [
+    { "id": 1, "name": "John", "email": "john@example.com", "age": 25 },
+    ...
+  ]
+}
+```
+``` ❌ Error Response
+{
+  "message": "Error fetching users"
+}
+```
+
+📸 **Postman Screenshot for GET all users**
+![Get Users](./assets/Get-All-Users.JPG)
+
+---
+
+### Get User By ID
+
+**GET** `/api/users/:id`
+
+``` ✅ Success Response 
+{
+  "message": "User with id: 1 fetched successfully",
+  "user": { "id": 1, "name": "John", "email": "john@example.com", "age": 25 }
+}
+```
+``` ❌ Error Response
+{
+  "message": "User not found"
+}
+```
+📸 **Postman Screenshot for GET by ID**
+![Get User By Id](./assets/Get-User-By-Id.JPG)
+
+---
+
+### Update User
+
+**PUT** `/api/users/:id`
+
+```json
+{
+  "name": "Gentle",
+  "email": "gentle@example.com",
+  "age": 23
+}
+```
+``` ❌ Error Response
+{
+  "message": "User updated successfully"
+}
+```
+📸 **Postman Screenshot for PUT**
+![Uodate User](./assets/Update-User.JPG)
+
+---
+
+### Delete User
+
+**DELETE** `/api/users/:id`
+
+``` ✅ Success Response 
+{
+  "message": "User with ID: 1 deleted successfully"
+}
+```
+``` ❌ Error Response
+{
+  "message": "No user found with that ID: 1"
+}
+```
+📸 **Postman Screenshot for DELETE**
+![Delete User](./assets/Delete-User.JPG)
+
+---
+
+## 📁 Folder Structure
+
+```
+.
+├── controllers/
+│   └── userController.js
+├── db/
+│   └── db.js
+├── middleware/
+│   └── errorHandler.js
+├── routes/
+│   └── userRoutes.js
+├── validations/
+│   └── userValidation.js
+├── main.js
+├── .env
+├── .gitignore
+└── README.md
 ```
 
 ---
 
-### GET `/users`
-Get a list of all users.
+## ✅ Features
+
+- Parameterized SQL queries
+- Proper HTTP status codes
+- Centralized error handling
+- Input validation using Joi
+- Modular file structure
+- Pagination and filtering for user listing
+- Swagger/OpenAPI documentation
 
 ---
 
-### GET `/users/:id`
-Get a user by their ID.
-
 ---
 
-### PUT `/users/:id`
-Update a user’s information by ID.
-
-**Body Example:**
-
-```json
-{
-  "name": "Jane Doe",
-  "email": "jane@example.com",
-  "age": 30
-}
-```
-
----
-
-### DELETE `/users/:id`
-Delete a user by ID.
-
----
-
-## 👤 Author
+## 🙌 Author
 
 **Paschal Omereife**
+
+---
+
+## 📄 License
+
+This project is licensed under the ISC License.
