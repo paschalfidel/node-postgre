@@ -34,7 +34,7 @@ This is a simple CRUD (Create, Read, Update, Delete) API built with **Node.js**,
 
 ```bash
 git clone https://github.com/paschalfidel/node-postgre.git
-cd postgre-mini-project
+cd node-postgre
 ```
 
 ### 2. Install Dependencies
